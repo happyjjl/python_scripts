@@ -22,6 +22,17 @@ def getGreatestCommonDivisor2(x, y):
             common_divisor = i
     return common_divisor
 
+# 欧几里得辗转相除法：
+# 求两个数a和b的最大公约数(a,b)，可以用如下的定理：
+#   a = b * q + r   其中q为倍数，r为余数
+#   (a,b) = (b,r)
+def get_gcd(x, y):
+    while y != 0:
+        temp = y
+        y = x % y
+        x = temp
+    return x
+
 def getLeastCommonMultiple(x, y):
     step_x = x
     step_y = y
@@ -36,9 +47,6 @@ if __name__ == "__main__":
 
     number1 = int(input("请输入第一个正整数: "))
     number2 = int(input("请输入第二个正整数: "))
-    '''
-    greatest_common_divisor = getGreatestCommonDivisor2(number1, number2)
-    print("Greatest Common Divisor of", number1, number2, ":")
-    print(greatest_common_divisor)
-    '''
+ 
+    print("Greatest Common Divisor of", number1, "and", number2, ":", get_gcd(number1, number2))
     print("Least Common Multiple of", number1, "and", number2, ":", getLeastCommonMultiple(number1, number2))

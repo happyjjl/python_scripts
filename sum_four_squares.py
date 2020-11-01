@@ -5,16 +5,13 @@
 import math
 
 def sumFourSquares(n):
-    #count = 0
     sum_found = []
     for a in range(0, int(math.sqrt(n)) + 1):
         for b in range(0, a + 1):
             for c in range(0, b + 1):
                 for d in range(0, c + 1):
                     if a * a + b * b + c * c + d * d == n:
-                        #count += 1
                         sum_found.append([d, c, b, a])
-    #print(count)
     return sum_found
 
 if __name__ == "__main__":

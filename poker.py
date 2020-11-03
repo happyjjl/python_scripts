@@ -91,7 +91,7 @@ while i < num:
             if isStraight(card_point):
                 straight += 1                 # abcde（非同花）
             else:
-                nothing += 1
+                nothing += 1                  # 垃圾牌
     else:
         if len_distinct_card == 4:
             onepair += 1                      # aabcd

@@ -10,7 +10,7 @@
 import random
 import time
 
-num = 100000000                  # 模拟的总次数
+num = 10000000                  # 模拟的总次数
 
 # 每种组合的计数器
 nothing = 0                     # 5张啥都不是的垃圾牌
@@ -115,7 +115,7 @@ while i < num:
     i += 1
 
 end = time.perf_counter()
-
+print("Running time: {0} Seconds".format(end - start))
 print("{0}次模拟中，垃圾牌的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, nothing, nothing / num, 1302540 / 2598960))
 print("{0}次模拟中，一对的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, onepair, onepair / num, 1098240 / 2598960))
 print("{0}次模拟中，两对的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, twopair, twopair / num, 123552 / 2598960))
@@ -125,6 +125,3 @@ print("{0}次模拟中，同花的次数为{1}，Observed Probability = {2}，Th
 print("{0}次模拟中，葫芦的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, fullhouse, fullhouse / num, 3744/2598960))
 print("{0}次模拟中，铁支的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, fourofone, fourofone / num, 624 / 2598960))
 print("{0}次模拟中，同花顺的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, straightflush, straightflush / num, 40 / 2598960))
-
-#print(nothing + onepair + twopair + threeofone + straight + flush + fullhouse + fourofone + straightflush)
-print('Running time: %s Seconds'%(end-start))

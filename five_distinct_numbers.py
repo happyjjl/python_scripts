@@ -10,6 +10,8 @@ distinct = 0                    # 5张牌都不同的次数
 onepair = 0                     # 一对
 twopair = 0                     # 两对
 threeofone = 0                  # 三条
+fourofone = 0                   # 铁支
+fullhouse = 0                   # 葫芦
 
 i = 0
 while i < num:
@@ -21,27 +23,38 @@ while i < num:
     e = deck[random.randint(0, 51)]
     card = [a, b, c, d, e]
     '''
-    card = random.sample(deck, 5) # 从52张牌中无重复抽取5张，返回5个元素的列表
+    card = random.sample(deck, 5)           # 从52张牌中无重复抽取5张，返回5个元素的列表
     distinct_card = list(set(card))
-    len_distinct_card = len(distinct_card)
-    if len_distinct_card == 5:       # 将列表转换成集合，因为集合是无重复的，所以集合长度为5说明没有重复  
-        distinct += 1
-    if len_distinct_card == 4:
-        onepair += 1
-    if len_distinct_card == 3:
-        pairs = [0] * 3
-        for k in range(0, 3):
-            pairs.append(card.count(distinct_card[k]))
-        if max(pairs) == 2:
-            twopair += 1
+    len_distinct_card = len(distinct_card)   # 将列表转换成集合，因为集合是无重复的，所以集合长度为5说明没有重复
+    if len_distinct_card == 5:         
+        distinct += 1                     # abcde
+    else:
+        if len_distinct_card == 4:
+            onepair += 1                  # aabcd
         else:
-            threeofone += 1
-        
+            if len_distinct_card == 3:
+                pairs = [0] * 3
+                for k in range(0, 3):
+                    pairs.append(card.count(distinct_card[k]))
+                if max(pairs) == 2:
+                    twopair += 1          # aabbc
+                else:
+                    threeofone += 1       # aaabc
+            else:
+                pairs = [0] * 2
+                for k in range(0, 2):
+                    pairs.append(card.count(distinct_card[k]))
+                if max(pairs) == 4:
+                    fourofone += 1        # aaaab
+                else:
+                    fullhouse += 1        # aaabb
     i += 1
 
 print("{0}次实验中，5张牌都不同的次数为{1}，Probability = {2}".format(num, distinct, distinct / num))
 print("{0}次实验中，一对的次数为{1}，Probability = {2}".format(num, onepair, onepair / num))
 print("{0}次实验中，两对的次数为{1}，Probability = {2}".format(num, twopair, twopair / num))
 print("{0}次实验中，三条的次数为{1}，Probability = {2}".format(num, threeofone, threeofone / num))
+print("{0}次实验中，铁支的次数为{1}，Probability = {2}".format(num, fourofone, fourofone / num))
+print("{0}次实验中，葫芦的次数为{1}，Probability = {2}".format(num, fullhouse, fullhouse / num))
 
 

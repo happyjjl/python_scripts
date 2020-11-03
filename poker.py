@@ -14,7 +14,7 @@ import time
 
 # 判断是否为顺子，方法一
 # 列表中最大值和最小值的差 = 4 ，需要考虑特殊情况 Ace
-# 输入参数必须是5个不同点数的列表，否则需要进行判断。后面调用此函数时上下文已经进行了判断，因此本函数内不做判断
+# 输入参数n: 必须是5个不同点数的列表，否则需要进行判断。后面调用此函数时上下文已经进行了判断，因此本函数内不做判断
 def isStraight(n):
     #if len(set(n)) != 5:
     #    return False
@@ -28,6 +28,7 @@ def isStraight(n):
 
 # 判断是否为顺子，方法二
 # 列表排序后进行比较
+# 输入参数n: 5个元素的列表
 def isStraight2(n):
     straights = [[1, 2, 3, 4, 5],
                 [2, 3, 4, 5, 6],
@@ -45,12 +46,15 @@ def isStraight2(n):
         return False 
 
 # 判断是否为同花色，将花色列表转集合后根据集合长度是否为1进行判断
+# 输入参数n：5个元素的列表
 def isSameSuit(n):
     if len(set(n)) == 1:
         return True
     else:
         return False
 
+# 输入：num  模拟的次数
+# 返回：各牌型次数的元祖
 def getProbability(num):
     # 每种组合的计数器
     nothing = 0                     # 5张啥都不是的垃圾牌

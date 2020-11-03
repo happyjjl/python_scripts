@@ -10,26 +10,7 @@
 import random
 import time
 
-num = 10000000                  # 模拟的总次数
-
-# 每种组合的计数器
-nothing = 0                     # 5张啥都不是的垃圾牌
-one_pair = 0                    # 一对
-two_pairs = 0                   # 两对
-three_of_a_kind = 0             # 三条
-straight = 0                    # 顺子
-flush = 0                       # 同花
-full_house = 0                  # 葫芦
-four_of_a_kind = 0              # 铁支
-straight_flush = 0              # 同花顺
-
-# 用两维的嵌套列表表示52张牌，列表有52个元素，对应52张牌，每个元素是一个列表，列表有两个元素，第一个元素表示点数，第二个元素表示花色
-deck52 = []
-for x in range(1, 14):          # 初始化52张牌
-    deck52.append([x, 1])       # 1 = 方块
-    deck52.append([x, 2])       # 2 = 红桃
-    deck52.append([x, 3])       # 3 = 黑桃
-    deck52.append([x, 4])       # 4 = 梅花
+#num = 10000000                  # 模拟的总次数
 
 # 判断是否为顺子，方法一
 # 列表中最大值和最小值的差 = 4 ，需要考虑特殊情况 Ace
@@ -70,58 +51,84 @@ def isSameSuit(n):
     else:
         return False
 
-start = time.perf_counter()
-i = 0     # 循环计数器
-while i < num:
-    card_point = []     # 牌的点数
-    card_suit = []      # 牌的花色
-    card = random.sample(deck52, 5)           # 从52张牌中无重复抽取5张，返回5个元素的列表    
-    for x in card:
-        card_point.append(x[0])
-        card_suit.append(x[1])
-    distinct_card = list(set(card_point))
-    len_distinct_card = len(distinct_card)    # 将列表转换成集合，因为集合是无重复的，所以集合长度为5说明没有重复
-    if len_distinct_card == 5:         
-        if isSameSuit(card_suit):
-            if isStraight(card_point):
-                straight_flush += 1           # abcde（同花顺）
-            else:
-                flush += 1                    # 同花
-        else:
-            if isStraight(card_point):
-                straight += 1                 # abcde（非同花）
-            else:
-                nothing += 1                  # 垃圾牌
-    else:
-        if len_distinct_card == 4:
-            one_pair += 1                     # aabcd
-        else:
-            if len_distinct_card == 3:
-                repeats = [0] * 3
-                for k in range(0, 3):
-                    repeats.append(card_point.count(distinct_card[k]))
-                if max(repeats) == 2:
-                    two_pairs += 1            # aabbc
-                else:
-                    three_of_a_kind += 1      # aaabc
-            else:
-                repeats = [0] * 2
-                for k in range(0, 2):
-                    repeats.append(card_point.count(distinct_card[k]))
-                if max(repeats) == 4:
-                    four_of_a_kind += 1       # aaaab
-                else:
-                    full_house += 1           # aaabb
-    i += 1
+def getProbability(num):
+    # 每种组合的计数器
+    nothing = 0                     # 5张啥都不是的垃圾牌
+    one_pair = 0                    # 一对
+    two_pairs = 0                   # 两对
+    three_of_a_kind = 0             # 三条
+    straight = 0                    # 顺子
+    flush = 0                       # 同花
+    full_house = 0                  # 葫芦
+    four_of_a_kind = 0              # 铁支
+    straight_flush = 0              # 同花顺
+    # 用两维的嵌套列表表示52张牌，列表有52个元素，对应52张牌，每个元素是一个列表，列表有两个元素，第一个元素表示点数，第二个元素表示花色
+    deck52 = []
+    for x in range(1, 14):          # 初始化52张牌
+        deck52.append([x, 1])       # 1 = 方块
+        deck52.append([x, 2])       # 2 = 红桃
+        deck52.append([x, 3])       # 3 = 黑桃
+        deck52.append([x, 4])       # 4 = 梅花
 
-end = time.perf_counter()
-print("Running time: {0} Seconds".format(end - start))
-print("{0}次模拟中，垃圾牌的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, nothing, nothing / num, 1302540 / 2598960))
-print("{0}次模拟中，一对的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, one_pair, one_pair / num, 1098240 / 2598960))
-print("{0}次模拟中，两对的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, two_pairs, two_pairs / num, 123552 / 2598960))
-print("{0}次模拟中，三条的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, three_of_a_kind, three_of_a_kind / num, 54912 / 2598960))
-print("{0}次模拟中，顺子的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, straight, straight / num, 10200 / 2598960))
-print("{0}次模拟中，同花的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, flush, flush / num, 5108/ 2598960))
-print("{0}次模拟中，葫芦的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, full_house, full_house / num, 3744/2598960))
-print("{0}次模拟中，铁支的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, four_of_a_kind, four_of_a_kind / num, 624 / 2598960))
-print("{0}次模拟中，同花顺的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, straight_flush, straight_flush / num, 40 / 2598960))
+    i = 0     # 循环计数器
+    while i < num:
+        card_point = []     # 牌的点数
+        card_suit = []      # 牌的花色
+        card = random.sample(deck52, 5)           # 从52张牌中无重复抽取5张，返回5个元素的列表    
+        for x in card:
+            card_point.append(x[0])
+            card_suit.append(x[1])
+        distinct_card = list(set(card_point))
+        len_distinct_card = len(distinct_card)    # 将列表转换成集合，因为集合是无重复的，所以集合长度为5说明没有重复
+        if len_distinct_card == 5:         
+            if isSameSuit(card_suit):
+                if isStraight(card_point):
+                    straight_flush += 1           # abcde（同花顺）
+                else:
+                    flush += 1                    # 同花
+            else:
+                if isStraight(card_point):
+                    straight += 1                 # abcde（非同花）
+                else:
+                    nothing += 1                  # 垃圾牌
+        else:
+            if len_distinct_card == 4:
+                one_pair += 1                     # aabcd
+            else:
+                if len_distinct_card == 3:
+                    repeats = [0] * 3
+                    for k in range(0, 3):
+                        repeats.append(card_point.count(distinct_card[k]))
+                    if max(repeats) == 2:
+                        two_pairs += 1            # aabbc
+                    else:
+                        three_of_a_kind += 1      # aaabc
+                else:
+                    repeats = [0] * 2
+                    for k in range(0, 2):
+                        repeats.append(card_point.count(distinct_card[k]))
+                    if max(repeats) == 4:
+                        four_of_a_kind += 1       # aaaab
+                    else:
+                        full_house += 1           # aaabb
+        i += 1
+    return (nothing, one_pair, two_pairs, three_of_a_kind, straight, flush, full_house, four_of_a_kind, straight_flush)
+
+if __name__ == "__main__":
+    num = int(input("请输入模拟的数: "))
+    if num < 1:
+        print("请输入大于零的整数")
+    else:
+        start = time.perf_counter()
+        hands = getProbability(num)
+        end = time.perf_counter()
+        print("Running time: {0} Seconds".format(end - start))
+        print("{0}次模拟中，垃圾牌的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, hands[0], hands[0] / num, 1302540 / 2598960))
+        print("{0}次模拟中，一对的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, hands[1], hands[1] / num, 1098240 / 2598960))
+        print("{0}次模拟中，两对的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, hands[2], hands[2] / num, 123552 / 2598960))
+        print("{0}次模拟中，三条的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, hands[3], hands[3] / num, 54912 / 2598960))
+        print("{0}次模拟中，顺子的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, hands[4], hands[4] / num, 10200 / 2598960))
+        print("{0}次模拟中，同花的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, hands[5], hands[5] / num, 5108/ 2598960))
+        print("{0}次模拟中，葫芦的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, hands[6], hands[6] / num, 3744/2598960))
+        print("{0}次模拟中，铁支的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, hands[7], hands[7] / num, 624 / 2598960))
+        print("{0}次模拟中，同花顺的次数为{1}，Observed Probability = {2}，Theory Probability = {3}".format(num, hands[8], hands[8] / num, 40 / 2598960))

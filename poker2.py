@@ -145,5 +145,5 @@ if __name__ == "__main__":
     end = time.perf_counter()
     print("Tests : {0} , Running time: {1} Seconds".format(num, end - start))
     for key in hands:
-        print("{0} : {1} , Observed Probability = {2}, Theory Probability = {3}".format(key, hands[key], hands[key] / num, theory_probs[key]))
+        print("{0:12}\t{1:12}\tObserved Probability = {2:.8f}\tTheory Probability = {3:.8f}".format(key, hands[key], hands[key] / num, theory_probs[key]))
     

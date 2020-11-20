@@ -117,7 +117,7 @@ def getProbability(num):
     return (nothing, one_pair, two_pairs, three_of_a_kind, straight, flush, full_house, four_of_a_kind, straight_flush)
 
 if __name__ == "__main__":
-    num = int(input("请输入模拟的数: "))
+    num = int(input("请输入模拟的次数: "))
     if num < 1:
         print("请输入大于零的整数")
     else:

@@ -7,6 +7,7 @@
 # 其他：http://mathforum.org/library/drmath/view/55979.html
 #
 
+import itertools
 
 def find_consecutive_numbers(A):
     slow = 1
@@ -31,15 +32,18 @@ def find_consecutive_numbers(A):
 
 if __name__ == "__main__":
 
-    #N = 10
-    N = int(input("请输入一个大于0的整数: "))
-    print("divide", N, "into sum of consecutive positive numbers:")
-    
-    x, y = find_consecutive_numbers(N)
-    n = len(x)
-    
-    for i in range(n):
-        consecutive_numbers = list(range(x[i], y[i] + 1))
+
+    pieces = [4, 6, 8, 9, 10, 12, 14, 15, 16, 18, 20, 21, 24, 25, 28, 30]
+
+    pieces_cuts = {4:2, 6:3, 8:4, 9:4, 10:5, 12:5, 14:7, 15:6, 16:6, 18:7, 20:7, 21:8, 24:8, 25:8, 28:9, 30:9}
+
+    three_cakes = itertools.combinations_with_replacement(pieces, 3)
+    for piece in three_cakes:
+        if sum(piece) == 37:
+            print(piece, pieces_cuts[piece[0]] + pieces_cuts[piece[1]] + pieces_cuts[piece[2]])
+
+    #for i in range(n):
+     #   consecutive_numbers = list(range(x[i], y[i] + 1))
         #print(y[i] - x[i] + 1, ":", x[i], y[i])
-        print(y[i] - x[i] + 1, ":", "+".join(str(i) for i in consecutive_numbers))     
-    print("breakups:", n)
+      #  print(y[i] - x[i] + 1, ":", "+".join(str(i) for i in consecutive_numbers))     
+    #print("breakups:", n)

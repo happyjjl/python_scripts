@@ -78,7 +78,7 @@ print('Running time: %s Seconds'%(end-start))
 #getPrimesByEratosthenes2(101)
 
 if __name__ == "__main__":
-    primes = getPrimesByEratosthenes2(101)
+    primes = getPrimesByEratosthenes2(700)
     print(primes)
     print("total", len(primes), "primes!")    
 #if isPrime(my_number):

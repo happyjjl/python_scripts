@@ -6,33 +6,26 @@
 import itertools
 import random
 
-# allLengthCombinationSum(list)
-# 功能：返回列表中所有的任意元素的和
-# 输入：列表，列表为正整数
-# 输出：列表中任意元素的和形成的集合
-#       集合包括:
-#           单个元素
-#           所有两个元素的和
-#           所有三个元素的和
-#           。。。
-#           。。。
-#           所有n-1个元素的和（n为输入列表的长度）
-def allLengthCombinationSum(mylist):
-    n = len(mylist)
-    newlist = []
-    sumlist = []
-    for i in range(1, n + 1):
-        newlist += list(itertools.combinations(mylist, i))
-    for x in newlist:
-        sumlist.append(sum(x))
-    return set(sumlist)
-    
+# 
+#      A        B              S(A) = C
+#       \     /   \            S(B) = C + D
+#        \   /     \           S(C) = A + B + E
+#         C ------- D          S(D) = B + C + F + G + I
+#        /        / | \        S(E) = C + F + H
+#       /        /  |  \       S(F) = D + E + I
+#      E ------ F ----- G      S(G) = D + I
+#       \        \  |  /       S(H) = E + I
+#        \        \ | /        S(I) = D + F + G + H
+#         H ------- I
+# 算法： 
+#    将1-9的不同排列对应到ABCDEFGHI
+#    按照上图，从S(B)开始计算对应的和，每次计算后，判断和是否在题目给出的9个和里面
+#    如果连续8次计算的和都在题目给出的9个和里面，则此时的排列即符合题意的解
 
 if __name__ == "__main__":
     numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     neighbor_sums = [26, 8, 19, 13, 17, 10, 4, 19, 24]
     p = itertools.permutations(numbers)
-    #bingo = 0
     m = 0
     for x in p:
         m += 1
@@ -69,7 +62,6 @@ if __name__ == "__main__":
             k += 1
         else:
             continue
-        #m += 1
         if k == 8:
             print(x)
             print('运行次数：', m)

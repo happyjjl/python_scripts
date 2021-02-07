@@ -29,27 +29,49 @@ def allLengthCombinationSum(mylist):
     
 
 if __name__ == "__main__":
-    num = int(input("请输入模拟的次数: "))
-    #numbers = range(1,100)
+    numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
     neighbor_sums = [26, 8, 19, 13, 17, 10, 4, 19, 24]
-    bingo = 0
-    k = 0
-    while k < num:
-        ten_numbers = random.sample(numbers, 10) # 从1-99中任意选择10个数字
-        for i in range(1, 6):  # 1 vs 9，2 vs 8，3 vs 7，4 vs 6，5 vs 5
-            found = 0
-            left_number = list(itertools.combinations(ten_numbers, i))
-            for x in left_number:
-                left_set = set(x)                                   # 两个集合中的第一个
-                right_set = set(ten_numbers).difference(left_set)   # 两个集合的另一个
-                left_sums = allLengthCombinationSum(left_set)       # 计算集合中所有可能的和
-                right_sums = allLengthCombinationSum(right_set)     # 计算集合中所有可能的和
-                if not left_sums.isdisjoint(right_sums):            # 找到一个相等的和即可
-                    print(left_set, right_set, left_sums.intersection(right_sums))
-                    found = 1
-                    bingo += 1
-                    break
-            if found:break
-        k += 1
-    print('模拟次数：', num)
-    print('满足次数：', bingo)
+    p = itertools.permutations(numbers)
+    #bingo = 0
+    m = 0
+    for x in p:
+        m += 1
+        k = 0
+        if x[2] + x[3] in neighbor_sums:
+            k += 1
+        else:
+            continue
+        if x[0] + x[1] + x[4] in neighbor_sums:
+            k += 1
+        else:
+            continue
+        if x[1] + x[2] + x[5] + x[6] + x[8] in neighbor_sums:
+            k += 1
+        else:
+            continue
+        if x[2] + x[5] + x[7] in neighbor_sums:
+            k += 1
+        else:
+            continue
+        if x[3] + x[4] + x[8] in neighbor_sums:
+            k += 1
+        else:
+            continue
+        if x[3] + x[8] in neighbor_sums:
+            k += 1
+        else:
+            continue
+        if x[4] + x[8] in neighbor_sums:
+            k += 1
+        else:
+            continue
+        if x[3] + x[5] + x[6] + x[7] in neighbor_sums:
+            k += 1
+        else:
+            continue
+        #m += 1
+        if k == 8:
+            print(x)
+            print('运行次数：', m)
+            break
+    

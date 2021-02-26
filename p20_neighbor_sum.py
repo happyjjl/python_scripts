@@ -9,7 +9,7 @@ import random
 # 
 #      A        B              S(A) = C
 #       \     /   \            S(B) = C + D
-#        \   /     \           S(C) = A + B + E
+#        \   /     \           S(C) = A + B + D + E
 #         C ------- D          S(D) = B + C + F + G + I
 #        /        / | \        S(E) = C + F + H
 #       /        /  |  \       S(F) = D + E + I
@@ -21,6 +21,7 @@ import random
 #    将1-9的不同排列对应到ABCDEFGHI
 #    按照上图，从S(B)开始计算对应的和，每次计算后，判断和是否在题目给出的9个和里面
 #    如果连续8次计算的和都在题目给出的9个和里面，则此时的排列即符合题意的解
+#
 
 if __name__ == "__main__":
     numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9]
@@ -34,7 +35,7 @@ if __name__ == "__main__":
             k += 1
         else:
             continue
-        if x[0] + x[1] + x[4] in neighbor_sums:
+        if x[0] + x[1] + x[3] + x[4] in neighbor_sums:
             k += 1
         else:
             continue
